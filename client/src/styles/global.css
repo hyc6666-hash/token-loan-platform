@@ -412,26 +412,31 @@ table td[align="right"], table th[align="right"],
   pointer-events: none;
 }
 
-/* 渐变叠加层 — 品牌色半透明渐变，保证色调 + 文字可读性 */
+/* 渐变叠加层 — 品牌色渐变，保证色调 + 文字可读性
+   顶部和底部更浓（衔接上下板块），中间稍透（图片更清晰） */
 .section-bg::after {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--bg-base) 82%, transparent) 0%,
-    color-mix(in srgb, var(--bg-tint-1) 85%, transparent) 50%,
-    color-mix(in srgb, var(--bg-base) 88%, transparent) 100%
+    color-mix(in srgb, var(--bg-base) 75%, transparent) 0%,
+    color-mix(in srgb, var(--bg-tint-1) 55%, transparent) 20%,
+    color-mix(in srgb, var(--bg-tint-1) 50%, transparent) 50%,
+    color-mix(in srgb, var(--bg-tint-1) 55%, transparent) 80%,
+    color-mix(in srgb, var(--bg-base) 75%, transparent) 100%
   );
   z-index: 0;
   pointer-events: none;
 }
 
-/* section-alt 叠加层 — 稍深一点的品牌青色调 */
+/* section-alt 叠加层 — 稍深的品牌青色调 */
 .section-alt.section-bg::after {
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--bg-tint-1) 85%, transparent) 0%,
-    color-mix(in srgb, var(--bg-tint-2) 82%, transparent) 50%,
-    color-mix(in srgb, var(--bg-tint-1) 88%, transparent) 100%
+    color-mix(in srgb, var(--bg-tint-1) 75%, transparent) 0%,
+    color-mix(in srgb, var(--bg-tint-2) 55%, transparent) 20%,
+    color-mix(in srgb, var(--bg-tint-2) 50%, transparent) 50%,
+    color-mix(in srgb, var(--bg-tint-2) 55%, transparent) 80%,
+    color-mix(in srgb, var(--bg-tint-1) 75%, transparent) 100%
   );
 }
 
