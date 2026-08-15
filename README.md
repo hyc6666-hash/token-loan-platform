@@ -9,6 +9,16 @@
 
 **v4.0 全栈动态版** — 已从静态HTML升级为 React + Node.js + SQLite 全栈应用。
 
+## 线上访问
+
+| 服务 | 地址 | 平台 |
+|------|------|------|
+| **前端（用户访问）** | https://token-loan-platform-4rkt.vercel.app | Vercel |
+| **后端API** | https://token-loan-api-297319-4-1469070801.sh.run.tcloudbase.com/api | 腾讯云CloudBase |
+| **GitHub仓库** | https://github.com/hyc6666-hash/token-loan-platform | GitHub |
+
+**管理员账号：** 手机 13800000000 / 密码 admin123
+
 ## 快速启动
 
 ```bash
