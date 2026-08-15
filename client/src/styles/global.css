@@ -227,7 +227,12 @@ html {
 body {
   font-family: var(--font-sans);
   color: var(--text-primary);
-  background: var(--background);
+  background: linear-gradient(180deg,
+    var(--background) 0%,
+    var(--surface) 40%,
+    var(--surface) 60%,
+    var(--background) 100%);
+  background-attachment: fixed;
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -260,7 +265,9 @@ table td[align="right"], table th[align="right"],
   position: fixed;
   top: 0; left: 0; right: 0;
   height: var(--shell-header-height);
-  background: var(--background);
+  background: color-mix(in srgb, var(--background) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   z-index: 100;
   display: flex;
@@ -370,7 +377,9 @@ table td[align="right"], table th[align="right"],
 
 /* ============ Section ============ */
 .section { padding: var(--space-16) 0; }
-.section-alt { background: var(--surface); }
+.section-alt {
+  background: linear-gradient(180deg, var(--surface) 0%, color-mix(in srgb, var(--surface) 50%, var(--accent) 50%) 100%);
+}
 
 .section-header {
   text-align: center;
@@ -924,7 +933,9 @@ table td[align="right"], table th[align="right"],
 
 /* ============ Hero ============ */
 .hero {
-  background: var(--background);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, var(--accent) 0%, transparent 70%),
+    linear-gradient(180deg, var(--background) 0%, var(--surface) 100%);
   border-bottom: 1px solid var(--border);
   padding: var(--space-20) 0;
   position: relative;
@@ -1590,7 +1601,7 @@ table td[align="right"], table th[align="right"],
 
 /* ============ Footer ============ */
 .footer {
-  background: var(--surface);
+  background: linear-gradient(180deg, var(--surface) 0%, color-mix(in srgb, var(--surface) 60%, var(--gray-950) 40%) 100%);
   border-top: 1px solid var(--border);
   padding: var(--space-12) 0 var(--space-6);
 }
@@ -1694,7 +1705,8 @@ table td[align="right"], table th[align="right"],
 /* ============ Auth Pages ============ */
 .auth-page {
   min-height: 100vh;
-  background: var(--surface);
+  background: radial-gradient(ellipse 60% 50% at 50% 30%, var(--accent) 0%, transparent 70%),
+              linear-gradient(180deg, var(--background) 0%, var(--surface) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1721,7 +1733,7 @@ table td[align="right"], table th[align="right"],
 .dashboard-page {
   padding-top: var(--space-8);
   min-height: 100vh;
-  background: var(--surface);
+  background: linear-gradient(180deg, var(--background) 0%, var(--surface) 100%);
 }
 
 .dashboard-header { margin-bottom: var(--space-8); }
