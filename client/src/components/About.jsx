@@ -31,7 +31,7 @@ export default function About() {
   const [popup, setPopup] = useState(null)
 
   return (
-    <section className="section section-alt section-bg bg-about section-bg-bl" id="about">
+    <section className="section section-alt section-bg bg-about" id="about">
       <div className="shell-content">
         <div className="section-header fade-up">
           <div className="section-tag"><i className="fas fa-circle"></i> 关于我们</div>

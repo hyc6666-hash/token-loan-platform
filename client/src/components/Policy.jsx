@@ -20,7 +20,7 @@ export default function Policy() {
   const iconName = (t) => t === 'blue' ? 'file-alt' : t === 'purple' ? 'robot' : 'user-tie'
 
   return (
-    <section className="section section-bg bg-policy section-bg-bl" id="policy">
+    <section className="section section-bg bg-policy" id="policy">
       <div className="shell-content">
         <div className="section-header fade-up">
           <div className="section-tag"><i className="fas fa-circle"></i> 政策解读</div>

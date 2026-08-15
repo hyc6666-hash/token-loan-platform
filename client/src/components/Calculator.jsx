@@ -33,7 +33,7 @@ export default function Calculator() {
   }
 
   return (
-    <section className="section section-alt section-bg bg-calculator section-bg-bl" id="calculator">
+    <section className="section section-alt section-bg bg-calculator" id="calculator">
       <div className="shell-content">
         <div className="section-header fade-up">
           <div className="section-tag"><i className="fas fa-circle"></i> 智能匹配</div>

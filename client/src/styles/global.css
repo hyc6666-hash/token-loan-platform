@@ -387,31 +387,24 @@ table td[align="right"], table th[align="right"],
 /* ============ Section ============ */
 .section {
   padding: var(--space-16) 0;
-  background: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-tint-1) 100%);
   position: relative;
   overflow: hidden;
-}
-
-.section-alt {
-  background: linear-gradient(180deg, var(--bg-tint-1) 0%, var(--bg-tint-3) 50%, var(--bg-tint-2) 100%);
 }
 
 .section > * { position: relative; z-index: 1; }
 
 /* ============ 板块背景图片 ============ */
-/* 图片在角落完整清晰展示，通过渐变叠加层与板块背景自然融合 */
+/* 整张图片铺满 + 品牌色渐变叠加保证 Kai UI 色调 */
 .section-bg {
   position: relative;
   overflow: hidden;
 }
 
-/* 图片层 — 完整不透明，定位在角落 */
+/* 图片层 — 整张铺满 */
 .section-bg::before {
   content: '';
   position: absolute;
-  top: 0; right: 0;
-  width: 40%;
-  height: 100%;
+  inset: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -419,52 +412,26 @@ table td[align="right"], table th[align="right"],
   pointer-events: none;
 }
 
-/* 渐变叠加层 — 从外角透明 → 内侧板块背景色 */
+/* 渐变叠加层 — 品牌色半透明渐变，保证色调 + 文字可读性 */
 .section-bg::after {
   content: '';
   position: absolute;
-  top: 0; right: 0;
-  width: 40%;
-  height: 100%;
-  background: linear-gradient(225deg,
-    transparent 0%,
-    transparent 25%,
-    var(--bg-tint-1) 65%,
-    var(--bg-base) 100%
+  inset: 0;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--bg-base) 82%, transparent) 0%,
+    color-mix(in srgb, var(--bg-tint-1) 85%, transparent) 50%,
+    color-mix(in srgb, var(--bg-base) 88%, transparent) 100%
   );
   z-index: 0;
   pointer-events: none;
 }
 
-/* 左下角变体 */
-.section-bg-bl::before {
-  top: auto; bottom: 0; left: 0; right: auto;
-}
-.section-bg-bl::after {
-  top: auto; bottom: 0; left: 0; right: auto;
-  background: linear-gradient(45deg,
-    transparent 0%,
-    transparent 25%,
-    var(--bg-tint-1) 65%,
-    var(--bg-base) 100%
-  );
-}
-
-/* section-alt 的渐变终点色稍深，匹配交替板块背景 */
+/* section-alt 叠加层 — 稍深一点的品牌青色调 */
 .section-alt.section-bg::after {
-  background: linear-gradient(225deg,
-    transparent 0%,
-    transparent 25%,
-    var(--bg-tint-2) 65%,
-    var(--bg-tint-1) 100%
-  );
-}
-.section-alt.section-bg-bl::after {
-  background: linear-gradient(45deg,
-    transparent 0%,
-    transparent 25%,
-    var(--bg-tint-2) 65%,
-    var(--bg-tint-1) 100%
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--bg-tint-1) 85%, transparent) 0%,
+    color-mix(in srgb, var(--bg-tint-2) 82%, transparent) 50%,
+    color-mix(in srgb, var(--bg-tint-1) 88%, transparent) 100%
   );
 }
 
