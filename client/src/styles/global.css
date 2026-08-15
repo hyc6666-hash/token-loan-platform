@@ -422,30 +422,46 @@ table td[align="right"], table th[align="right"],
 .section > * { position: relative; z-index: 1; }
 
 /* ============ 板块背景图片 ============ */
-/* 图片作为底层，上面叠加品牌色渐变实现融合 */
+/* 图片在角落完整显示，通过渐变 mask 向另一侧淡出融合 */
 .section-bg {
   position: relative;
 }
+
+/* 右上角展示图片 — 渐变向左下淡出 */
 .section-bg::before {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 0; right: 0;
+  width: 55%;
+  height: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.08;
   z-index: 0;
   pointer-events: none;
+  /* 从右上完整 → 左下透明 */
+  -webkit-mask-image: linear-gradient(225deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0) 80%);
+  mask-image: linear-gradient(225deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0) 80%);
+  opacity: 0.22;
 }
+
+/* 左下角展示图片 — 渐变向右上淡出 */
+.section-bg.section-bg-bl::before {
+  top: auto; bottom: 0; left: 0; right: auto;
+  width: 55%;
+  -webkit-mask-image: linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0) 80%);
+  mask-image: linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0) 80%);
+}
+
 .section-bg > * { position: relative; z-index: 1; }
 
-/* 各板块背景图片 */
+/* 各板块背景图片 — 交替右上/左下 */
 .bg-products::before { background-image: url('/bg/datacenter.jpg'); }
-.bg-policy::before { background-image: url('/bg/beijing.jpg'); }
-.bg-cases::before { background-image: url('/bg/network.jpg'); }
+.bg-policy::before    { background-image: url('/bg/beijing.jpg'); }
+.bg-cases::before     { background-image: url('/bg/network.jpg'); }
 .bg-calculator::before { background-image: url('/bg/ai-chip.jpg'); }
-.bg-guide::before { background-image: url('/bg/office.jpg'); }
-.bg-about::before { background-image: url('/bg/building.jpg'); }
+.bg-guide::before     { background-image: url('/bg/office.jpg'); }
+.bg-about::before    { background-image: url('/bg/building.jpg'); }
 
 .section-header {
   text-align: center;
