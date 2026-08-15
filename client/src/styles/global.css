@@ -389,74 +389,89 @@ table td[align="right"], table th[align="right"],
   padding: var(--space-16) 0;
   background: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-tint-1) 100%);
   position: relative;
+  overflow: hidden;
 }
 
 .section-alt {
   background: linear-gradient(180deg, var(--bg-tint-1) 0%, var(--bg-tint-3) 50%, var(--bg-tint-2) 100%);
 }
 
-/* 板块衔接过渡层 — 顶部从上一段颜色 feather 渐入 */
-.section::before,
-.section-alt::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 80px;
-  background: linear-gradient(180deg, var(--bg-tint-1) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.section::after,
-.section-alt::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 80px;
-  background: linear-gradient(0deg, var(--bg-tint-1) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* 确保 section 内容在过渡层之上 */
 .section > * { position: relative; z-index: 1; }
 
 /* ============ 板块背景图片 ============ */
-/* 图片在角落完整显示，通过渐变 mask 向另一侧淡出融合 */
+/* 图片在角落完整清晰展示，通过渐变叠加层与板块背景自然融合 */
 .section-bg {
   position: relative;
+  overflow: hidden;
 }
 
-/* 右上角展示图片 — 渐变向左下淡出 */
+/* 图片层 — 完整不透明，定位在角落 */
 .section-bg::before {
   content: '';
   position: absolute;
   top: 0; right: 0;
-  width: 55%;
+  width: 40%;
   height: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   z-index: 0;
   pointer-events: none;
-  /* 从右上完整 → 左下透明 */
-  -webkit-mask-image: linear-gradient(225deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0) 80%);
-  mask-image: linear-gradient(225deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0) 80%);
-  opacity: 0.22;
 }
 
-/* 左下角展示图片 — 渐变向右上淡出 */
-.section-bg.section-bg-bl::before {
+/* 渐变叠加层 — 从外角透明 → 内侧板块背景色 */
+.section-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(225deg,
+    transparent 0%,
+    transparent 25%,
+    var(--bg-tint-1) 65%,
+    var(--bg-base) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 左下角变体 */
+.section-bg-bl::before {
   top: auto; bottom: 0; left: 0; right: auto;
-  width: 55%;
-  -webkit-mask-image: linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0) 80%);
-  mask-image: linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0) 80%);
+}
+.section-bg-bl::after {
+  top: auto; bottom: 0; left: 0; right: auto;
+  background: linear-gradient(45deg,
+    transparent 0%,
+    transparent 25%,
+    var(--bg-tint-1) 65%,
+    var(--bg-base) 100%
+  );
+}
+
+/* section-alt 的渐变终点色稍深，匹配交替板块背景 */
+.section-alt.section-bg::after {
+  background: linear-gradient(225deg,
+    transparent 0%,
+    transparent 25%,
+    var(--bg-tint-2) 65%,
+    var(--bg-tint-1) 100%
+  );
+}
+.section-alt.section-bg-bl::after {
+  background: linear-gradient(45deg,
+    transparent 0%,
+    transparent 25%,
+    var(--bg-tint-2) 65%,
+    var(--bg-tint-1) 100%
+  );
 }
 
 .section-bg > * { position: relative; z-index: 1; }
 
-/* 各板块背景图片 — 交替右上/左下 */
-.bg-products::before { background-image: url('/bg/datacenter.jpg'); }
+/* 各板块背景图片 */
+.bg-products::before  { background-image: url('/bg/datacenter.jpg'); }
 .bg-policy::before    { background-image: url('/bg/beijing.jpg'); }
 .bg-cases::before     { background-image: url('/bg/network.jpg'); }
 .bg-calculator::before { background-image: url('/bg/ai-chip.jpg'); }
