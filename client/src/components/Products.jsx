@@ -64,13 +64,13 @@ export default function Products() {
                 </tr>
               </thead>
               <tbody>
-                <tr><td><strong>额度核定</strong></td><td>按Kai TPM期货交易数据核定</td><td>按算力租赁费用30%</td><td style={{ color: 'var(--primary)', fontWeight: 600 }}>综合TPM消耗+征信+知识产权</td></tr>
-                <tr><td><strong>最高额度</strong></td><td>按TPM·h消耗量动态核定</td><td style={{ color: 'var(--primary)', fontWeight: 600 }}>2,000万元</td><td>500万元词元券支持</td></tr>
-                <tr><td><strong>补贴比例</strong></td><td>按TPM合同/消耗额度</td><td>算力租赁费用30%</td><td style={{ color: 'var(--primary)', fontWeight: 600 }}>词元消耗费用50%</td></tr>
-                <tr><td><strong>适用对象</strong></td><td>Kai平台企业采购方</td><td>Kai认证容量供应商</td><td style={{ color: 'var(--primary)', fontWeight: 600 }}>OPC（一人公司）创业者</td></tr>
-                <tr><td><strong>增信方式</strong></td><td>Kai TPM结算数据</td><td>算力租赁合同+容量注册</td><td style={{ color: 'var(--primary)', fontWeight: 600 }}>TPM消耗+征信+知识产权+赛事获奖</td></tr>
-                <tr><td><strong>数据来源</strong></td><td style={{ color: 'var(--primary)', fontWeight: 600 }}>Kai期货交易与结算记录</td><td>Kai容量注册与交付确认</td><td>Kai聚合商子账户分配数据</td></tr>
-                <tr><td><strong>参考模式</strong></td><td>广州Token贷模式（北京版）</td><td>亦庄"词元十条"</td><td style={{ color: 'var(--primary)', fontWeight: 600 }}>北京OPC创新发展行动方案</td></tr>
+                <tr><td><strong>额度核定</strong></td><td>按Kai TPM期货交易数据核定</td><td>按算力租赁费用30%</td><td style={{ color: 'var(--primary-active)', fontWeight: 600 }}>综合TPM消耗+征信+知识产权</td></tr>
+                <tr><td><strong>最高额度</strong></td><td>按TPM·h消耗量动态核定</td><td style={{ color: 'var(--primary-active)', fontWeight: 600 }}>2,000万元</td><td>500万元词元券支持</td></tr>
+                <tr><td><strong>补贴比例</strong></td><td>按TPM合同/消耗额度</td><td>算力租赁费用30%</td><td style={{ color: 'var(--primary-active)', fontWeight: 600 }}>词元消耗费用50%</td></tr>
+                <tr><td><strong>适用对象</strong></td><td>Kai平台企业采购方</td><td>Kai认证容量供应商</td><td style={{ color: 'var(--primary-active)', fontWeight: 600 }}>OPC（一人公司）创业者</td></tr>
+                <tr><td><strong>增信方式</strong></td><td>Kai TPM结算数据</td><td>算力租赁合同+容量注册</td><td style={{ color: 'var(--primary-active)', fontWeight: 600 }}>TPM消耗+征信+知识产权+赛事获奖</td></tr>
+                <tr><td><strong>数据来源</strong></td><td style={{ color: 'var(--primary-active)', fontWeight: 600 }}>Kai期货交易与结算记录</td><td>Kai容量注册与交付确认</td><td>Kai聚合商子账户分配数据</td></tr>
+                <tr><td><strong>参考模式</strong></td><td>广州Token贷模式（北京版）</td><td>亦庄"词元十条"</td><td style={{ color: 'var(--primary-active)', fontWeight: 600 }}>北京OPC创新发展行动方案</td></tr>
               </tbody>
             </table>
           </div>
