@@ -36,7 +36,7 @@ export default function FloatApply() {
 
   return (
     <>
-      <button className="float-apply" onClick={() => setOpen(true)}>
+      <button className="btn btn-primary float-apply" onClick={() => setOpen(true)}>
         <i className="fas fa-paper-plane"></i> 立即申请
       </button>
 
@@ -47,33 +47,34 @@ export default function FloatApply() {
             <h3>在线申请预约</h3>
             <p className="modal-sub">{user ? '填写以下信息，专属金融服务顾问将在1个工作日内联系您' : '请先登录后提交申请'}</p>
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>企业名称</label>
-                <input required value={form.company_name} onChange={e => setForm({...form, company_name: e.target.value})} placeholder="请输入企业全称" />
+              <div className="field">
+                <label className="field-label">企业名称</label>
+                <input className="input" required value={form.company_name} onChange={e => setForm({ ...form, company_name: e.target.value })} placeholder="请输入企业全称" />
               </div>
-              <div className="form-group">
-                <label>申请产品</label>
-                <select required value={form.product_type} onChange={e => setForm({...form, product_type: e.target.value})}>
+              <div className="field">
+                <label className="field-label">申请产品</label>
+                <select className="select" required value={form.product_type} onChange={e => setForm({ ...form, product_type: e.target.value })}>
                   <option value="token">Token贷</option>
                   <option value="compute">算力贷</option>
                   <option value="opc">OPC贷</option>
                   <option value="consult">暂不确定，需要咨询</option>
                 </select>
               </div>
-              <div className="form-group">
-                <label>联系人</label>
-                <input required value={form.contact_name} onChange={e => setForm({...form, contact_name: e.target.value})} placeholder="请输入联系人姓名" />
+              <div className="field">
+                <label className="field-label">联系人</label>
+                <input className="input" required value={form.contact_name} onChange={e => setForm({ ...form, contact_name: e.target.value })} placeholder="请输入联系人姓名" />
               </div>
-              <div className="form-group">
-                <label>联系电话</label>
-                <input required value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder="请输入手机号码" />
+              <div className="field">
+                <label className="field-label">联系电话</label>
+                <input className="input" required value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="请输入手机号码" />
               </div>
-              <div className="form-group">
-                <label>补充说明</label>
-                <textarea value={form.notes} onChange={e => setForm({...form, notes: e.target.value})} placeholder="可填写企业情况、融资需求等" />
+              <div className="field">
+                <label className="field-label">补充说明</label>
+                <textarea className="textarea" value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} placeholder="可填写企业情况、融资需求等" />
               </div>
-              <button type="submit" className="form-submit" disabled={submitting}>
-                {submitting ? '提交中...' : '提交预约申请'}
+              <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }} disabled={submitting}>
+                {submitting ? '' : '提交预约申请'}
+                {submitting && <span className="btn-loading" />}
               </button>
             </form>
           </div>

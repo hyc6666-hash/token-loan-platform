@@ -14,10 +14,10 @@ export default function ApplyGuide() {
 
   return (
     <section className="section" id="guide">
-      <div className="container">
+      <div className="shell-content">
         <div className="section-header fade-up">
           <div className="section-tag"><i className="fas fa-circle"></i> 申请指南</div>
-          <h2 className="section-title dark">5步极速申请</h2>
+          <h2 className="section-title">5步极速申请</h2>
           <p className="section-desc">从提交申请到放款，全流程透明高效</p>
         </div>
 
@@ -36,36 +36,45 @@ export default function ApplyGuide() {
         </div>
 
         <div className="guide-cols fade-up">
-          <div className="materials-card">
-            <div className="materials-title"><i className="fas fa-folder-open"></i> 申请材料清单</div>
-            <ul className="material-list">
-              {[
-                ['企业营业执照副本', true],
-                ['Token消耗数据报告 / 算力租赁合同', true],
-                ['法人/创始人身份证明', true],
-                ['企业征信报告', true],
-                ['自主知识产权证明（OPC贷适用）', false],
-                ['赛事获奖证书（OPC贷增信用）', false],
-                ['近一年财务报表', false],
-                ['智算集群建设方案（算力贷适用）', false],
-              ].map(([text, req], i) => (
-                <li key={i}>
-                  <i className="fas fa-file-alt"></i> {text}
-                  {req && <span className="required">必填</span>}
-                </li>
-              ))}
-            </ul>
+          <div className="card">
+            <div className="card-header">
+              <div className="card-title"><i className="fas fa-folder-open" style={{ marginRight: 'var(--space-2)', color: 'var(--primary)' }}></i> 申请材料清单</div>
+            </div>
+            <div className="card-body">
+              <ul style={{ listStyle: 'none' }}>
+                {[
+                  ['企业营业执照副本', true],
+                  ['Token消耗数据报告 / 算力租赁合同', true],
+                  ['法人/创始人身份证明', true],
+                  ['企业征信报告', true],
+                  ['自主知识产权证明（OPC贷适用）', false],
+                  ['赛事获奖证书（OPC贷增信用）', false],
+                  ['近一年财务报表', false],
+                  ['智算集群建设方案（算力贷适用）', false],
+                ].map(([text, req], i) => (
+                  <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 14, color: 'var(--text-secondary)', padding: 'var(--space-2) 0', borderBottom: '1px solid var(--border)' }}>
+                    <i className="fas fa-file-alt" style={{ color: 'var(--primary)', fontSize: 12 }}></i>
+                    {text}
+                    {req && <span className="badge badge-danger" style={{ marginLeft: 'auto' }}>必填</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="faq-card">
-            <div className="faq-title"><i className="fas fa-question-circle"></i> 常见问题</div>
-            {faqs.map((f, i) => (
-              <div key={i} className="faq-item">
-                <div className={`faq-q ${openFaq === i ? 'open' : ''}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                  {f.q} <i className="fas fa-chevron-down"></i>
+          <div className="card">
+            <div className="card-header">
+              <div className="card-title"><i className="fas fa-question-circle" style={{ marginRight: 'var(--space-2)', color: 'var(--primary)' }}></i> 常见问题</div>
+            </div>
+            <div className="card-body">
+              {faqs.map((f, i) => (
+                <div key={i} className="accordion-item">
+                  <button className={`accordion-trigger ${openFaq === i ? 'open' : ''}`} onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-expanded={openFaq === i}>
+                    {f.q} <i className="fas fa-chevron-down"></i>
+                  </button>
+                  <div className={`accordion-content ${openFaq === i ? 'open' : ''}`}>{f.a}</div>
                 </div>
-                <div className={`faq-a ${openFaq === i ? 'open' : ''}`}>{f.a}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

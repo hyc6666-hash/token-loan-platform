@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
-export default function Navbar() {
+export default function Navbar({ theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const { user, isAdmin, logout } = useAuth()
@@ -38,48 +38,62 @@ export default function Navbar() {
   ]
 
   return (
-    <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
-      <div className="nav-inner">
-        <Link to="/" className="nav-logo">
-          <div className="nav-logo-icon">K</div>
-          <div className="nav-logo-text"><span>Kai</span> · 北京Token贷</div>
-        </Link>
+    <header className="shell-header" style={{ boxShadow: scrolled ? 'var(--shadow-sm)' : 'none' }}>
+      <Link to="/" className="shell-header-brand">
+        <div className="shell-header-brand-icon">K</div>
+        <div className="shell-header-brand-text"><span>Kai</span> · 北京Token贷</div>
+      </Link>
 
-        <ul className={`nav-links ${mobileOpen ? '' : ''}`} style={mobileOpen ? { display: 'flex', flexDirection: 'column', position: 'absolute', top: '64px', left: 0, right: 0, background: 'rgba(15,33,64,0.98)', padding: '20px 24px', gap: '16px' } : {}}>
-          {navItems.map(item => (
-            <li key={item.section}>
-              <a href={`#${item.section}`} onClick={(e) => { e.preventDefault(); scrollTo(item.section) }}>
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+      <nav className="shell-header-nav" style={mobileOpen ? {
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'absolute',
+        top: 'var(--shell-header-height)',
+        left: 0, right: 0,
+        background: 'var(--background)',
+        padding: 'var(--space-4)',
+        gap: 'var(--space-1)',
+        borderBottom: '1px solid var(--border)',
+        boxShadow: 'var(--shadow-md)'
+      } : {}}>
+        {navItems.map(item => (
+          <a key={item.section} href={`#${item.section}`} onClick={(e) => { e.preventDefault(); scrollTo(item.section) }}>
+            {item.label}
+          </a>
+        ))}
+      </nav>
 
-        <div className="nav-user">
-          {user ? (
-            <>
-              <Link to="/dashboard" className="nav-cta" style={{ fontSize: '13px', padding: '6px 16px' }}>
-                <i className="fas fa-user" /> {user.contact_name}
-              </Link>
-              {isAdmin && (
-                <Link to="/admin" className="nav-cta" style={{ fontSize: '13px', padding: '6px 16px', background: 'rgba(124,58,237,0.8)' }}>
-                  <i className="fas fa-cog" /> 管理
-                </Link>
-              )}
-              <button className="nav-user-btn" onClick={() => { logout(); navigate('/') }}>退出</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="nav-cta" style={{ fontSize: '13px', padding: '6px 16px' }}>登录</Link>
-              <Link to="/register" className="nav-cta" style={{ fontSize: '13px', padding: '6px 16px', background: 'rgba(124,58,237,0.8)' }}>注册</Link>
-            </>
-          )}
-        </div>
-
-        <button className="nav-mobile" onClick={() => setMobileOpen(!mobileOpen)}>
-          <i className={`fas fa-${mobileOpen ? 'times' : 'bars'}`}></i>
+      <div className="shell-header-actions">
+        {/* 主题切换 - Kai UI: useColorMode */}
+        <button className="theme-toggle" onClick={onToggleTheme} aria-label="切换主题">
+          <i className={`fas fa-${theme === 'dark' ? 'sun' : 'moon'}`}></i>
         </button>
+
+        {user ? (
+          <>
+            <Link to="/dashboard" className="btn btn-secondary btn-sm">
+              <i className="fas fa-user" /> {user.contact_name}
+            </Link>
+            {isAdmin && (
+              <Link to="/admin" className="btn btn-primary btn-sm">
+                <i className="fas fa-cog" /> 管理
+              </Link>
+            )}
+            <button className="btn btn-ghost btn-sm" onClick={() => { logout(); navigate('/') }}>
+              退出
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="btn btn-secondary btn-sm">登录</Link>
+            <Link to="/register" className="btn btn-primary btn-sm">注册</Link>
+          </>
+        )}
       </div>
-    </nav>
+
+      <button className="shell-header-toggle" onClick={() => setMobileOpen(!mobileOpen)}>
+        <i className={`fas fa-${mobileOpen ? 'times' : 'bars'}`}></i>
+      </button>
+    </header>
   )
 }

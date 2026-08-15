@@ -18,10 +18,10 @@ export default function Cases() {
 
   return (
     <section className="section section-alt" id="cases">
-      <div className="container">
+      <div className="shell-content">
         <div className="section-header fade-up">
           <div className="section-tag"><i className="fas fa-circle"></i> 成功案例</div>
-          <h2 className="section-title dark">北京词元经济实践典范</h2>
+          <h2 className="section-title">北京词元经济实践典范</h2>
           <p className="section-desc">已有企业通过Token贷与词元经济政策获得实质支持</p>
         </div>
         <div className="cases-grid fade-up">

@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 export default function Footer() {
   return (
     <footer className="footer">
-      <div className="container">
+      <div className="shell-content">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link to="/" className="nav-logo" style={{marginBottom:0}}>
-              <div className="nav-logo-icon">K</div>
-              <div className="nav-logo-text"><span>Kai</span> · 北京Token贷</div>
+            <Link to="/" className="shell-header-brand" style={{ marginBottom: 0 }}>
+              <div className="shell-header-brand-icon">K</div>
+              <div className="shell-header-brand-text"><span>Kai</span> · 北京Token贷</div>
             </Link>
             <p>北京Token贷 · 词元金融服务平台，服务北京AI算力企业，助力词元经济高质量发展。依托北京市"词元十条"等专项政策，提供Token贷、算力贷、OPC贷一站式金融服务。</p>
           </div>
@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <p>2026 Kai · 北京Token贷 · 词元金融服务平台 ｜ 政策依据：《北京市关于加快智能体引领发展的若干措施》"词元十条"</p>
-          <p>全栈动态版 v4.0</p>
+          <p>全栈动态版 v4.0 · Kai UI Registry</p>
         </div>
       </div>
     </footer>
