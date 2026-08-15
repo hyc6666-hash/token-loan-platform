@@ -19,7 +19,7 @@ export default function Products() {
   }, [])
 
   return (
-    <section className="section section-alt" id="products">
+    <section className="section section-alt section-bg bg-products" id="products">
       <div className="shell-content">
         <div className="section-header fade-up">
           <div className="section-tag"><i className="fas fa-circle"></i> 金融产品</div>

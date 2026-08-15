@@ -13,7 +13,7 @@ export default function ApplyGuide() {
   const [openFaq, setOpenFaq] = useState(null)
 
   return (
-    <section className="section" id="guide">
+    <section className="section section-bg bg-guide" id="guide">
       <div className="shell-content">
         <div className="section-header fade-up">
           <div className="section-tag"><i className="fas fa-circle"></i> 申请指南</div>

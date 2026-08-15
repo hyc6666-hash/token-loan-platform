@@ -17,7 +17,7 @@ export default function Cases() {
   }, [])
 
   return (
-    <section className="section section-alt" id="cases">
+    <section className="section section-alt section-bg bg-cases" id="cases">
       <div className="shell-content">
         <div className="section-header fade-up">
           <div className="section-tag"><i className="fas fa-circle"></i> 成功案例</div>

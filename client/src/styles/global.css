@@ -421,6 +421,32 @@ table td[align="right"], table th[align="right"],
 /* 确保 section 内容在过渡层之上 */
 .section > * { position: relative; z-index: 1; }
 
+/* ============ 板块背景图片 ============ */
+/* 图片作为底层，上面叠加品牌色渐变实现融合 */
+.section-bg {
+  position: relative;
+}
+.section-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  z-index: 0;
+  pointer-events: none;
+}
+.section-bg > * { position: relative; z-index: 1; }
+
+/* 各板块背景图片 */
+.bg-products::before { background-image: url('/bg/datacenter.jpg'); }
+.bg-policy::before { background-image: url('/bg/beijing.jpg'); }
+.bg-cases::before { background-image: url('/bg/network.jpg'); }
+.bg-calculator::before { background-image: url('/bg/ai-chip.jpg'); }
+.bg-guide::before { background-image: url('/bg/office.jpg'); }
+.bg-about::before { background-image: url('/bg/building.jpg'); }
+
 .section-header {
   text-align: center;
   margin-bottom: var(--space-12);
@@ -976,7 +1002,8 @@ table td[align="right"], table th[align="right"],
   background:
     radial-gradient(ellipse 90% 70% at 50% 0%, var(--bg-tint-2) 0%, transparent 60%),
     radial-gradient(ellipse 60% 40% at 80% 20%, var(--bg-tint-1) 0%, transparent 50%),
-    linear-gradient(180deg, var(--bg-base) 0%, var(--bg-tint-1) 100%);
+    linear-gradient(180deg, color-mix(in srgb, var(--bg-base) 70%, transparent) 0%, var(--bg-tint-1) 100%),
+    url('/bg/ai-chip.jpg') center/cover no-repeat;
   border-bottom: 1px solid var(--border);
   padding: var(--space-20) 0;
   position: relative;
