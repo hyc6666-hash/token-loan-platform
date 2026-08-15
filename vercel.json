@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd client && npm install && node ../build.js",
+  "outputDirectory": "client/dist",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

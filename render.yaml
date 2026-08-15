@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: token-loan-api
+    runtime: node
+    buildCommand: cd server && npm install
+    startCommand: cd server && node src/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: DB_PATH
+        value: ./data/tokenloan.db
+      - key: CLIENT_URL
+        fromService:
+          name: token-loan-platform
+          type: static
+    plan: free
