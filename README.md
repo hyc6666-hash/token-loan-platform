@@ -13,7 +13,8 @@
 
 | 服务 | 地址 | 平台 |
 |------|------|------|
-| **前端（用户访问）** | https://token-loan-platform-4rkt.vercel.app | Vercel |
+| **前端（国内访问）** | https://token-loan-d6gw9idaw05c4ec86-1469070801.tcloudbaseapp.com | 腾讯云CloudBase |
+| **前端（海外访问）** | https://token-loan-platform-4rkt.vercel.app | Vercel |
 | **后端API** | https://token-loan-api-297319-4-1469070801.sh.run.tcloudbase.com/api | 腾讯云CloudBase |
 | **GitHub仓库** | https://github.com/hyc6666-hash/token-loan-platform | GitHub |
 
