@@ -1,8 +1,8 @@
 {
-  "name": "token-loan-platform",
-  "version": "4.0.0",
+  "name": "kai-quant-trading",
+  "version": "2.0.0",
   "private": true,
-  "description": "北京Token贷 · 词元金融服务平台 - 全栈版",
+  "description": "KAI 算力期货量化交易系统",
   "scripts": {
     "dev": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",

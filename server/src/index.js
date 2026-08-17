@@ -6,10 +6,11 @@ import { fileURLToPath } from 'url'
 
 // 路由
 import authRoutes from './routes/auth.js'
-import applicationRoutes from './routes/applications.js'
-import calculatorRoutes from './routes/calculator.js'
-import adminRoutes from './routes/admin.js'
-import contentRoutes from './routes/content.js'
+import marketRoutes from './routes/market.js'
+import tradingRoutes from './routes/trading.js'
+import strategyRoutes from './routes/strategy.js'
+import riskRoutes from './routes/risk.js'
+import settingsRoutes from './routes/settings.js'
 
 // 加载环境变量
 dotenv.config()
@@ -21,22 +22,19 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 // ============ 中间件 ============
-// 教学说明：
-// CORS（跨域资源共享）控制哪些前端网站可以访问后端API
-// 生产环境需要把Vercel域名加入白名单
 const allowedOrigins = [
-  'http://localhost:5173',                    // 本地开发
-  'https://vercel.app',                       // Vercel默认域名
-  process.env.CLIENT_URL                      // 自定义域名（环境变量）
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://vercel.app',
+  process.env.CLIENT_URL
 ].filter(Boolean)
 
 app.use(cors({
   origin: function(origin, callback) {
-    // 允许无origin的请求（如服务端请求、Postman）或白名单内的origin
     if (!origin || allowedOrigins.some(o => origin.includes(o.replace('https://', '').replace('http://', '')))) {
       callback(null, true)
     } else {
-      callback(null, true) // 开发阶段先全部允许，生产环境可改为 false
+      callback(null, true)
     }
   },
   credentials: true
@@ -53,10 +51,11 @@ if (process.env.NODE_ENV !== 'production') {
 
 // ============ API 路由 ============
 app.use('/api/auth', authRoutes)
-app.use('/api/applications', applicationRoutes)
-app.use('/api/calculator', calculatorRoutes)
-app.use('/api/admin', adminRoutes)
-app.use('/api/content', contentRoutes)
+app.use('/api/market', marketRoutes)
+app.use('/api/trading', tradingRoutes)
+app.use('/api/strategy', strategyRoutes)
+app.use('/api/risk', riskRoutes)
+app.use('/api/settings', settingsRoutes)
 
 // 健康检查
 app.get('/api/health', (req, res) => {
@@ -83,6 +82,6 @@ app.use((err, req, res, next) => {
 
 // ============ 启动 ============
 app.listen(PORT, () => {
-  console.log(`🚀 服务器运行在 http://localhost:${PORT}`)
+  console.log(`🚀 KAI 量化交易服务器运行在 http://localhost:${PORT}`)
   console.log(`📋 API文档: http://localhost:${PORT}/api/health`)
 })

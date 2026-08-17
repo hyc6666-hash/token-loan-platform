@@ -1,7 +1,7 @@
 {
-  "name": "client",
+  "name": "kai-quant-client",
   "private": true,
-  "version": "4.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -1,0 +1,863 @@
+/* ============================================================
+ * 量化交易系统样式
+ * 基于 Kai UI 设计令牌系统扩展
+ * ============================================================ */
+
+/* ============ 量化布局 ============ */
+.quant-layout {
+  min-height: 100vh;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+}
+
+.quant-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+  width: 100%;
+}
+
+.quant-header {
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.quant-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quant-header .quant-badge {
+  background: linear-gradient(135deg, var(--brand-500), #7c3aed);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.quant-nav {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.quant-nav a {
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--gray-600);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.quant-nav a:hover {
+  background: var(--surface-hover);
+  color: var(--foreground);
+}
+
+.quant-nav a.active {
+  background: var(--brand-50);
+  color: var(--brand-700);
+}
+
+/* ============ 卡片 ============ */
+.quant-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s;
+}
+
+.quant-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.quant-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.quant-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quant-card-subtitle {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-top: 2px;
+}
+
+/* ============ 资金选择器 ============ */
+.capital-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.capital-input-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.capital-input {
+  flex: 1;
+  font-size: 28px;
+  font-weight: 700;
+  padding: 16px 20px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--background);
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.capital-input:focus {
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 3px var(--brand-50);
+}
+
+.capital-currency {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--gray-500);
+}
+
+.capital-tiers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.capital-tier-card {
+  padding: 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.capital-tier-card:hover {
+  border-color: var(--brand-300);
+  background: var(--brand-50);
+}
+
+.capital-tier-card.active {
+  border-color: var(--brand-500);
+  background: var(--brand-50);
+}
+
+.capital-tier-card .tier-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.capital-tier-card .tier-range {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-top: 4px;
+}
+
+/* ============ 风险偏好选择 ============ */
+.risk-pref-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.risk-pref-card {
+  padding: 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.risk-pref-card:hover {
+  border-color: var(--brand-300);
+}
+
+.risk-pref-card.active {
+  border-color: var(--brand-500);
+  background: var(--brand-50);
+}
+
+.risk-pref-card .pref-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.risk-pref-card .pref-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.risk-pref-card .pref-desc {
+  font-size: 11px;
+  color: var(--gray-500);
+  margin-top: 4px;
+}
+
+/* ============ AI 推荐面板 ============ */
+.ai-advisor-panel {
+  background: linear-gradient(135deg, #f0f9ff, #f5f3ff);
+  border: 1px solid var(--brand-200);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.ai-advisor-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ai-advisor-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--brand-500), #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+}
+
+.ai-advisor-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.ai-advisor-subtitle {
+  font-size: 13px;
+  color: var(--gray-500);
+}
+
+.ai-summary {
+  background: rgba(255,255,255,0.6);
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--gray-700);
+  margin-bottom: 20px;
+}
+
+/* ============ 策略卡片 ============ */
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.strategy-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.2s;
+}
+
+.strategy-card:hover {
+  border-color: var(--brand-300);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.strategy-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.strategy-card-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.strategy-card-type {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.risk-low { background: var(--success-bg); color: var(--success-fg); }
+.risk-medium { background: var(--warning-bg); color: var(--warning-fg); }
+.risk-high { background: var(--danger-bg); color: var(--danger-fg); }
+
+.strategy-card-desc {
+  font-size: 13px;
+  color: var(--gray-500);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.strategy-card-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.strategy-stat {
+  text-align: center;
+}
+
+.strategy-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.strategy-stat-label {
+  font-size: 11px;
+  color: var(--gray-500);
+  margin-top: 2px;
+}
+
+.strategy-card-reasoning {
+  font-size: 12px;
+  color: var(--gray-600);
+  line-height: 1.5;
+  background: var(--surface);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+/* ============ 风控仪表盘 ============ */
+.risk-dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.risk-metric-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.risk-metric-value {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 8px 0;
+}
+
+.risk-metric-label {
+  font-size: 13px;
+  color: var(--gray-500);
+}
+
+.risk-level-safe { color: var(--success-icon); }
+.risk-level-low { color: #84cc16; }
+.risk-level-moderate { color: var(--warning-icon); }
+.risk-level-high { color: #f97316; }
+.risk-level-extreme { color: var(--danger-icon); }
+
+/* 风控规则列表 */
+.risk-rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.risk-rule-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  transition: all 0.15s;
+}
+
+.risk-rule-item.breached {
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+}
+
+.risk-rule-item.warning {
+  border-color: var(--warning-border);
+  background: var(--warning-bg);
+}
+
+.risk-rule-info {
+  flex: 1;
+}
+
+.risk-rule-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.risk-rule-desc {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-top: 2px;
+}
+
+.risk-rule-bar {
+  width: 120px;
+  height: 6px;
+  background: var(--gray-200);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 0 16px;
+}
+
+.risk-rule-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+.risk-rule-status {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.status-normal { background: var(--success-bg); color: var(--success-fg); }
+.status-warning { background: var(--warning-bg); color: var(--warning-fg); }
+.status-breached { background: var(--danger-bg); color: var(--danger-fg); }
+
+/* 风控告警 */
+.risk-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 4px solid;
+  margin-bottom: 8px;
+}
+
+.alert-info { border-color: var(--info-icon); background: var(--info-bg); }
+.alert-warning { border-color: var(--warning-icon); background: var(--warning-bg); }
+.alert-critical { border-color: var(--danger-icon); background: var(--danger-bg); }
+.alert-breach { border-color: #7c2d12; background: #fef2f2; }
+
+.risk-alert-content {
+  flex: 1;
+}
+
+.risk-alert-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.risk-alert-message {
+  font-size: 13px;
+  color: var(--gray-600);
+  line-height: 1.4;
+}
+
+.risk-alert-time {
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-top: 4px;
+}
+
+/* ============ 交易表单 ============ */
+.trade-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.trade-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.trade-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trade-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-600);
+}
+
+.trade-input,
+.trade-select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--background);
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.trade-input:focus,
+.trade-select:focus {
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 3px var(--brand-50);
+}
+
+.trade-side-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.trade-side-btn {
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--background);
+  color: var(--gray-600);
+}
+
+.trade-side-btn.buy.active {
+  border-color: var(--success-icon);
+  background: var(--success-bg);
+  color: var(--success-fg);
+}
+
+.trade-side-btn.sell.active {
+  border-color: var(--danger-icon);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+}
+
+.trade-submit-btn {
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: #fff;
+}
+
+.trade-submit-btn.buy {
+  background: var(--success-icon);
+}
+
+.trade-submit-btn.sell {
+  background: var(--danger-icon);
+}
+
+.trade-submit-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.trade-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============ 持仓表 ============ */
+.positions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.positions-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: var(--gray-500);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.positions-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+.positions-table tr:hover {
+  background: var(--surface-hover);
+}
+
+.pnl-positive { color: var(--success-fg); font-weight: 600; }
+.pnl-negative { color: var(--danger-fg); font-weight: 600; }
+
+/* ============ 行情列表 ============ */
+.market-quote-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.market-quote-row:hover {
+  background: var(--surface-hover);
+}
+
+.market-quote-row:last-child {
+  border-bottom: none;
+}
+
+.market-quote-model {
+  display: flex;
+  flex-direction: column;
+}
+
+.market-quote-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.market-quote-provider {
+  font-size: 11px;
+  color: var(--gray-500);
+}
+
+.market-quote-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.market-quote-change {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ============ K线图 ============ */
+.candle-chart {
+  width: 100%;
+  height: 400px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+}
+
+.chart-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.chart-timeframes {
+  display: flex;
+  gap: 4px;
+}
+
+.chart-tf-btn {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  background: var(--background);
+  color: var(--gray-600);
+}
+
+.chart-tf-btn.active {
+  background: var(--brand-50);
+  border-color: var(--brand-500);
+  color: var(--brand-700);
+}
+
+/* ============ 设置页 ============ */
+.settings-section {
+  margin-bottom: 24px;
+}
+
+.api-setting-card {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.api-setting-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.api-status-badge {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.api-status-active { background: var(--success-bg); color: var(--success-fg); }
+.api-status-inactive { background: var(--gray-100); color: var(--gray-500); }
+.api-status-error { background: var(--danger-bg); color: var(--danger-fg); }
+
+/* ============ 通用 ============ */
+.quant-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.quant-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.quant-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.quant-stat {
+  text-align: center;
+  padding: 16px;
+}
+
+.quant-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.quant-stat-label {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-top: 4px;
+}
+
+.quant-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--brand-500);
+  color: #fff;
+}
+
+.quant-btn:hover {
+  background: var(--brand-600);
+}
+
+.quant-btn-secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.quant-btn-danger {
+  background: var(--danger-icon);
+}
+
+.quant-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quant-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: var(--gray-400);
+  font-size: 14px;
+}
+
+.quant-empty {
+  text-align: center;
+  padding: 40px;
+  color: var(--gray-400);
+  font-size: 14px;
+}
+
+.quant-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+/* ============ 响应式 ============ */
+@media (max-width: 768px) {
+  .quant-container { padding: 16px; }
+  .quant-grid-2, .quant-grid-3, .quant-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  .capital-tiers, .risk-pref-selector {
+    grid-template-columns: 1fr 1fr;
+  }
+  .risk-dashboard {
+    grid-template-columns: 1fr;
+  }
+  .trade-form-row {
+    grid-template-columns: 1fr;
+  }
+  .quant-nav {
+    overflow-x: auto;
+  }
+}

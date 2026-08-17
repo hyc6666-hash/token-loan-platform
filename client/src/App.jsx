@@ -1,23 +1,17 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import FloatApply from './components/FloatApply'
 import ToastProvider from './components/Toast'
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import DashboardPage from './pages/DashboardPage'
-import AdminPage from './pages/AdminPage'
+import QuantLayout from './components/quant/QuantLayout'
+import QuantDashboard from './pages/quant/QuantDashboard'
+import MarketPage from './pages/quant/MarketPage'
+import TradingPage from './pages/quant/TradingPage'
+import StrategyPage from './pages/quant/StrategyPage'
+import RiskPage from './pages/quant/RiskPage'
+import SettingsPage from './pages/quant/SettingsPage'
 
 /**
- * App 根组件
- * 
- * Kai UI 规范要点：
- * 1. AppShell 布局：固定头部 + 内容区
- * 2. light/dark 双主题：通过 html.dark 类名控制
- * 3. 主题偏好存储在 localStorage（版本化键）
+ * App 根组件 — KAI 算力期货量化交易系统
  */
 export default function App() {
   const { loading } = useAuth()
@@ -30,7 +24,7 @@ export default function App() {
   // 应用主题
   useEffect(() => {
     const applyTheme = (mode) => {
-      const isDark = mode === 'dark' || 
+      const isDark = mode === 'dark' ||
         (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
       document.documentElement.classList.toggle('dark', isDark)
       document.documentElement.setAttribute('data-color-mode', isDark ? 'dark' : 'light')
@@ -38,7 +32,6 @@ export default function App() {
     applyTheme(theme)
     localStorage.setItem('kai-color-mode', theme)
 
-    // 监听系统主题变化
     if (theme === 'system') {
       const mq = window.matchMedia('(prefers-color-scheme: dark)')
       const handler = () => applyTheme('system')
@@ -66,20 +59,16 @@ export default function App() {
 
   return (
     <ToastProvider>
-      <div className="app-shell">
-        <Navbar theme={theme} onToggleTheme={toggleTheme} />
-        <main className="shell-content" style={{ padding: 0, maxWidth: '100%' }}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-          </Routes>
-        </main>
-        <Footer />
-        <FloatApply />
-      </div>
+      <Routes>
+        <Route path="/" element={<Navigate to="/quant" replace />} />
+        <Route path="/quant" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><QuantDashboard /></QuantLayout>} />
+        <Route path="/quant/market" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><MarketPage /></QuantLayout>} />
+        <Route path="/quant/trading" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><TradingPage /></QuantLayout>} />
+        <Route path="/quant/strategy" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><StrategyPage /></QuantLayout>} />
+        <Route path="/quant/risk" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><RiskPage /></QuantLayout>} />
+        <Route path="/quant/settings" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><SettingsPage /></QuantLayout>} />
+        <Route path="*" element={<Navigate to="/quant" replace />} />
+      </Routes>
     </ToastProvider>
   )
 }

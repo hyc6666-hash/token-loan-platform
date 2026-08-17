@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: token-loan-api
+    name: kai-quant-api
     runtime: node
     buildCommand: cd server && npm install
     startCommand: cd server && node src/index.js
@@ -17,6 +17,6 @@ services:
         value: ./data/tokenloan.db
       - key: CLIENT_URL
         fromService:
-          name: token-loan-platform
+          name: kai-quant-trading
           type: static
     plan: free
