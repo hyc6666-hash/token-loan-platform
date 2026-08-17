@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.cloudbase.net/cli/cloudbaserc.schema.json",
+  "envId": "token-loan-d6gw9idaw05c4ec86",
+  "app": {
+    "serviceName": "kai-quant",
+    "framework": "vite",
+    "buildCommand": "npm run build",
+    "outputDir": "dist",
+    "envVariables": {
+      "VITE_API_URL": "https://token-loan-api-297319-4-1469070801.sh.run.tcloudbase.com/api"
+    }
+  }
+}

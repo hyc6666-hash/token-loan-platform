@@ -6,25 +6,23 @@ export default function QuantLayout({ children, theme, onToggleTheme }) {
   const location = useLocation()
 
   const navItems = [
-    { path: '/quant', label: '仪表盘', icon: '🏠' },
-    { path: '/quant/market', label: '行情', icon: '📊' },
-    { path: '/quant/trading', label: '交易', icon: '💹' },
-    { path: '/quant/strategy', label: '策略', icon: '🎯' },
-    { path: '/quant/risk', label: '风控', icon: '🛡️' },
-    { path: '/quant/settings', label: '设置', icon: '⚙️' }
+    { path: '/quant', label: '仪表盘', icon: 'fa-gauge-high' },
+    { path: '/quant/pipeline', label: 'AI Pipeline', icon: 'fa-diagram-project' },
+    { path: '/quant/market', label: '行情', icon: 'fa-chart-line' },
+    { path: '/quant/trading', label: '交易', icon: 'fa-arrows-rotate' },
+    { path: '/quant/strategy', label: '策略', icon: 'fa-bullseye' },
+    { path: '/quant/risk', label: '风控', icon: 'fa-shield-halved' },
+    { path: '/quant/settings', label: '设置', icon: 'fa-gear' }
   ]
 
   return (
     <div className="quant-layout">
+      {/* HUD 头部 */}
       <header className="quant-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Link to="/quant" style={{ textDecoration: 'none' }}>
-            <h1>
-              <span className="quant-badge">QUANT</span>
-              KAI 算力期货量化交易系统
-            </h1>
-          </Link>
-        </div>
+        <Link to="/quant" className="quant-logo">
+          <span className="quant-logo-mark">K</span>
+          <span>KAI<span style={{ color: 'var(--text-tertiary)', fontWeight: 400 }}>·QUANT</span></span>
+        </Link>
 
         <nav className="quant-nav">
           {navItems.map(item => {
@@ -34,39 +32,62 @@ export default function QuantLayout({ children, theme, onToggleTheme }) {
               <Link
                 key={item.path}
                 to={item.path}
-                className={isActive ? 'active' : ''}
+                className={`quant-nav-link ${isActive ? 'active' : ''}`}
               >
-                {item.icon} {item.label}
+                <i className={`fa-solid ${item.icon}`} style={{ fontSize: 12 }} />
+                {item.label}
               </Link>
             )
           })}
         </nav>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div className="quant-header-right">
+          {/* 连接状态 */}
+          <div className="quant-status">
+            <span className="quant-status-dot" />
+            <span>LIVE</span>
+          </div>
+
+          {/* 主题切换 */}
           <button
             onClick={onToggleTheme}
-            className="quant-btn quant-btn-secondary"
-            style={{ fontSize: 12, padding: '6px 12px' }}
+            className="theme-toggle"
             title="切换主题"
           >
-            {theme === 'dark' ? '☀️' : '🌙'}
+            <i className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`} />
           </button>
+
+          {/* 用户 */}
           {user ? (
             <>
-              <span style={{ fontSize: 13, color: 'var(--gray-600)' }}>
-                {user.company_name || user.contact_name || '用户'}
+              <span className="text-sm text-tertiary" style={{ fontFamily: 'var(--font-mono)' }}>
+                {user.company_name || user.contact_name || 'USER'}
               </span>
-              <button onClick={logout} className="quant-btn quant-btn-secondary" style={{ fontSize: 12, padding: '6px 12px' }}>
+              <button onClick={logout} className="btn btn-outline btn-sm">
+                <i className="fa-solid fa-right-from-bracket" />
                 退出
               </button>
             </>
           ) : (
-            <span style={{ fontSize: 13, color: 'var(--gray-500)' }}>未登录</span>
+            <span className="text-sm text-muted" style={{ fontFamily: 'var(--font-mono)' }}>GUEST</span>
           )}
         </div>
       </header>
 
-      <main style={{ flex: 1, overflow: 'auto' }}>
+      {/* 连接横幅 */}
+      <div className="quant-banner">
+        <span className="quant-status-dot" />
+        <span>SYSTEM ONLINE</span>
+        <span className="quant-banner-sep" />
+        <span>ENGINE v2.0</span>
+        <span className="quant-banner-sep" />
+        <span>LATENCY &lt;50ms</span>
+        <span className="quant-banner-sep" />
+        <span>UPTIME 99.9%</span>
+      </div>
+
+      {/* 主内容 */}
+      <main className="quant-main">
         {children}
       </main>
     </div>

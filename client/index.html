@@ -1,11 +1,58 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="dark" data-color-mode="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KAI · 算力期货量化交易系统</title>
   <meta name="description" content="KAI 算力期货量化交易系统 — AI模型算力期货多策略量化交易平台">
+  <meta name="theme-color" content="#0a0e1a">
+  <meta name="color-scheme" content="dark light">
+
+  <!-- Font Awesome 图标 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Inter 字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- JetBrains Mono 等宽字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- 内联加载动画（在 React 渲染前显示） -->
+  <style>
+    #root:empty::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0a0e1a;
+    }
+    #root:empty::before {
+      content: 'K';
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px; height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #22d3ee;
+      color: #0a0e1a;
+      font-size: 26px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: 0 0 24px rgba(34,211,238,0.4);
+      animation: kai-pulse 2s ease-in-out infinite;
+      z-index: 9999;
+    }
+    @keyframes kai-pulse {
+      0%, 100% { box-shadow: 0 0 12px rgba(34,211,238,0.15); }
+      50% { box-shadow: 0 0 28px rgba(34,211,238,0.5); }
+    }
+  </style>
 </head>
 <body>
   <div id="root"></div>

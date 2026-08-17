@@ -1,40 +1,46 @@
 import { useState, useEffect, createContext, useContext } from 'react'
 import { authApi } from '../services/api'
 
-/**
- * 认证上下文（AuthContext）
- * 
- * 教学说明：
- * React Context 是React提供的"全局状态"机制。
- * 类似于全局变量，但更安全——只有订阅了Context的组件才能读取。
- * 
- * 工作原理：
- * 1. AuthProvider 包裹整个应用，管理登录状态
- * 2. 任何子组件通过 useAuth() 获取当前用户信息和登录方法
- * 3. 登录后token存入localStorage，刷新页面后自动恢复登录状态
- */
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(localStorage.getItem('token'))
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
-  // 初始化：检查token是否有效
+  // 初始化：异步检查token，不阻塞UI渲染
   useEffect(() => {
-    if (token) {
-      authApi.getMe()
-        .then(data => {
-          setUser(data.user)
-        })
-        .catch(() => {
-          // token无效，清除
-          localStorage.removeItem('token')
-          setToken(null)
-        })
-        .finally(() => setLoading(false))
-    } else {
-      setLoading(false)
+    if (!token) return
+
+    const controller = new AbortController()
+    const timeout = setTimeout(() => {
+      controller.abort()
+      localStorage.removeItem('token')
+      setToken(null)
+    }, 5000)
+
+    // 直接使用 fetch 并传入 signal，确保超时能真正中断请求
+    fetch(`${import.meta.env.VITE_API_URL || '/api'}/auth/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+      signal: controller.signal
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('auth failed')
+        return res.json()
+      })
+      .then(data => {
+        clearTimeout(timeout)
+        setUser(data.user)
+      })
+      .catch(() => {
+        clearTimeout(timeout)
+        localStorage.removeItem('token')
+        setToken(null)
+      })
+
+    return () => {
+      clearTimeout(timeout)
+      controller.abort()
     }
   }, [])
 

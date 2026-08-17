@@ -9,16 +9,16 @@ import TradingPage from './pages/quant/TradingPage'
 import StrategyPage from './pages/quant/StrategyPage'
 import RiskPage from './pages/quant/RiskPage'
 import SettingsPage from './pages/quant/SettingsPage'
+import PipelinePage from './pages/quant/PipelinePage'
 
 /**
  * App 根组件 — KAI 算力期货量化交易系统
+ * 默认暗色模式（高科技风格）
  */
 export default function App() {
-  const { loading } = useAuth()
-
-  // 主题模式：system / light / dark
+  // 主题模式：默认 dark
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('kai-color-mode') || 'system'
+    return localStorage.getItem('kai-color-mode') || 'dark'
   })
 
   // 应用主题
@@ -49,19 +49,12 @@ export default function App() {
     })
   }
 
-  if (loading) {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--background)' }}>
-        <div style={{ color: 'var(--text-tertiary)', fontSize: 16 }}>加载中...</div>
-      </div>
-    )
-  }
-
   return (
     <ToastProvider>
       <Routes>
         <Route path="/" element={<Navigate to="/quant" replace />} />
         <Route path="/quant" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><QuantDashboard /></QuantLayout>} />
+        <Route path="/quant/pipeline" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><PipelinePage /></QuantLayout>} />
         <Route path="/quant/market" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><MarketPage /></QuantLayout>} />
         <Route path="/quant/trading" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><TradingPage /></QuantLayout>} />
         <Route path="/quant/strategy" element={<QuantLayout theme={theme} onToggleTheme={toggleTheme}><StrategyPage /></QuantLayout>} />

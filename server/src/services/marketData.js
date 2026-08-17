@@ -283,10 +283,19 @@ export function getRegions() {
   ]
 }
 
-// 获取市场概况
-export function getMarketOverview() {
+// 获取市场概况（集成爬虫数据）
+export async function getMarketOverview() {
   const models = getModels()
   const quotes = getAllMarketQuotes('SG1')
+
+  // 尝试获取爬虫数据
+  let kaiData = null
+  try {
+    const { scrapeKaiMarket } = await import('./kaiScraper.js')
+    kaiData = await scrapeKaiMarket()
+  } catch {
+    // 爬虫不可用时使用模拟数据
+  }
   
   const totalVolume = quotes.reduce((sum, q) => sum + q.volume, 0)
   const avgPrice = quotes.reduce((sum, q) => sum + q.price, 0) / quotes.length
@@ -311,7 +320,16 @@ export function getMarketOverview() {
       avg_price: Math.round(avgPrice),
       timestamp: new Date().toISOString()
     },
-    regions: getRegions()
+    regions: getRegions(),
+    kaiLive: kaiData ? {
+      source: kaiData.source,
+      latestPrice: kaiData.latestPrice,
+      spread: kaiData.spread,
+      orderBook: kaiData.orderBook,
+      account: kaiData.account,
+      models: kaiData.models,
+      timestamp: kaiData.timestamp
+    } : null
   }
 }
 

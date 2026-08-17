@@ -9,9 +9,9 @@ import {
 const router = Router()
 
 // 获取市场概况
-router.get('/overview', (req, res) => {
+router.get('/overview', async (req, res) => {
   try {
-    const overview = getMarketOverview()
+    const overview = await getMarketOverview()
     res.json(overview)
   } catch (err) {
     res.status(500).json({ error: err.message })

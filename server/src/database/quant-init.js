@@ -350,6 +350,118 @@ if (ruleCount.count === 0) {
   }
 }
 
+// ============ AI 模型配置表 ============
+db.exec(`
+  CREATE TABLE IF NOT EXISTS quant_ai_models (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    provider TEXT NOT NULL CHECK(provider IN ('openai', 'anthropic', 'deepseek', 'zhipu', 'moonshot', 'qwen', 'custom')),
+    model_id TEXT NOT NULL,
+    api_key TEXT,
+    api_base TEXT DEFAULT 'https://api.openai.com/v1',
+    temperature REAL DEFAULT 0.3,
+    max_tokens INTEGER DEFAULT 2000,
+    status TEXT DEFAULT 'inactive' CHECK(status IN ('active', 'inactive', 'error')),
+    last_tested_at TEXT,
+    last_error TEXT,
+    is_default INTEGER DEFAULT 0,
+    created_at TEXT DEFAULT (datetime('now', 'localtime')),
+    updated_at TEXT DEFAULT (datetime('now', 'localtime')),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  )
+`)
+
+// ============ 回测结果表 ============
+db.exec(`
+  CREATE TABLE IF NOT EXISTS quant_backtest_results (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    strategy_id TEXT,
+    strategy_name TEXT NOT NULL,
+    strategy_type TEXT NOT NULL,
+    config TEXT,
+    start_date TEXT NOT NULL,
+    end_date TEXT NOT NULL,
+    initial_capital REAL NOT NULL,
+    final_capital REAL NOT NULL,
+    total_return REAL NOT NULL,
+    annualized_return REAL NOT NULL,
+    max_drawdown REAL NOT NULL,
+    sharpe_ratio REAL NOT NULL,
+    win_rate REAL NOT NULL,
+    profit_loss_ratio REAL NOT NULL,
+    total_trades INTEGER NOT NULL,
+    winning_trades INTEGER NOT NULL,
+    losing_trades INTEGER NOT NULL,
+    avg_win REAL DEFAULT 0,
+    avg_loss REAL DEFAULT 0,
+    avg_holding_period REAL DEFAULT 0,
+    market_environments TEXT,
+    equity_curve TEXT,
+    trade_history TEXT,
+    ai_analysis TEXT,
+    ai_model_id TEXT,
+    status TEXT DEFAULT 'completed' CHECK(status IN ('running', 'completed', 'failed')),
+    created_at TEXT DEFAULT (datetime('now', 'localtime')),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  )
+`)
+
+// ============ 模拟交易记录表 ============
+db.exec(`
+  CREATE TABLE IF NOT EXISTS quant_paper_trades (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    strategy_id TEXT,
+    backtest_id TEXT,
+    model_code TEXT NOT NULL,
+    region TEXT DEFAULT 'SG1',
+    side TEXT NOT NULL CHECK(side IN ('buy', 'sell')),
+    order_type TEXT DEFAULT 'market' CHECK(order_type IN ('market', 'limit', 'stop')),
+    price REAL NOT NULL,
+    quantity REAL NOT NULL,
+    filled_price REAL,
+    filled_quantity REAL DEFAULT 0,
+    status TEXT DEFAULT 'pending' CHECK(status IN ('pending', 'filled', 'partial', 'cancelled')),
+    simulated_latency_ms INTEGER DEFAULT 0,
+    slippage_bps REAL DEFAULT 0,
+    fee REAL DEFAULT 0,
+    pnl REAL DEFAULT 0,
+    match_backtest INTEGER DEFAULT 0,
+    notes TEXT,
+    created_at TEXT DEFAULT (datetime('now', 'localtime')),
+    updated_at TEXT DEFAULT (datetime('now', 'localtime')),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  )
+`)
+
+// ============ Pipeline 阶段跟踪表 ============
+db.exec(`
+  CREATE TABLE IF NOT EXISTS quant_pipeline_stages (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    strategy_name TEXT NOT NULL,
+    strategy_type TEXT NOT NULL,
+    hypothesis TEXT,
+    config TEXT,
+    current_stage TEXT DEFAULT 'design' CHECK(current_stage IN ('design', 'backtest', 'paper', 'live', 'completed', 'failed')),
+    stage_status TEXT DEFAULT 'pending' CHECK(stage_status IN ('pending', 'in_progress', 'passed', 'failed', 'skipped')),
+    design_data TEXT,
+    backtest_data TEXT,
+    paper_data TEXT,
+    live_data TEXT,
+    ai_model_id TEXT,
+    ai_analysis TEXT,
+    capital_allocation REAL DEFAULT 0,
+    live_capital_percent REAL DEFAULT 0,
+    monitoring_data TEXT,
+    created_at TEXT DEFAULT (datetime('now', 'localtime')),
+    updated_at TEXT DEFAULT (datetime('now', 'localtime')),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  )
+`)
+
 // ============ 索引 ============
 db.exec(`
   CREATE INDEX IF NOT EXISTS idx_market_data_model ON quant_market_data(model_code, timestamp);
@@ -360,6 +472,10 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_risk_alerts_user ON quant_risk_alerts(user_id, created_at);
   CREATE INDEX IF NOT EXISTS idx_trades_user ON quant_trades(user_id, created_at);
   CREATE INDEX IF NOT EXISTS idx_signals_strategy ON quant_signals(strategy_id, created_at);
+  CREATE INDEX IF NOT EXISTS idx_ai_models_user ON quant_ai_models(user_id, status);
+  CREATE INDEX IF NOT EXISTS idx_backtest_user ON quant_backtest_results(user_id, created_at);
+  CREATE INDEX IF NOT EXISTS idx_paper_trades_user ON quant_paper_trades(user_id, created_at);
+  CREATE INDEX IF NOT EXISTS idx_pipeline_user ON quant_pipeline_stages(user_id, current_stage);
 `)
 
 console.log('✅ 量化交易数据库表初始化完成')

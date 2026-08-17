@@ -1,0 +1,5 @@
+*.log
+client-error.log
+client.log
+cloudbaserc.json
+.vercelignore

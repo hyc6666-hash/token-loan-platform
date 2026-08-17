@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import path from 'path'
+import fs from 'fs'
 import { fileURLToPath } from 'url'
 
 // 路由
@@ -11,6 +12,8 @@ import tradingRoutes from './routes/trading.js'
 import strategyRoutes from './routes/strategy.js'
 import riskRoutes from './routes/risk.js'
 import settingsRoutes from './routes/settings.js'
+import aiRoutes from './routes/ai.js'
+import pipelineRoutes from './routes/pipeline.js'
 
 // 加载环境变量
 dotenv.config()
@@ -56,19 +59,23 @@ app.use('/api/trading', tradingRoutes)
 app.use('/api/strategy', strategyRoutes)
 app.use('/api/risk', riskRoutes)
 app.use('/api/settings', settingsRoutes)
+app.use('/api/ai', aiRoutes)
+app.use('/api/pipeline', pipelineRoutes)
 
 // 健康检查
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() })
 })
 
-// 生产环境：托管前端静态文件
+// 生产环境：托管前端静态文件（仅当目录存在时）
 if (process.env.NODE_ENV === 'production') {
   const clientDist = path.join(__dirname, '../../client/dist')
-  app.use(express.static(clientDist))
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(clientDist, 'index.html'))
-  })
+  if (fs.existsSync(clientDist)) {
+    app.use(express.static(clientDist))
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(clientDist, 'index.html'))
+    })
+  }
 }
 
 // 全局错误处理

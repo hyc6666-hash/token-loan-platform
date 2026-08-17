@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+.git
+.env
+*.log
+client/
+*.md
+*.zip
+*.txt
+capture-network.cjs
+set-error-page.cjs
+start-tunnel.mjs

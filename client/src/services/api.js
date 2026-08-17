@@ -4,9 +4,13 @@
 
 const BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
-// 封装fetch请求
+// 默认请求超时：8秒
+const DEFAULT_TIMEOUT = 8000
+
+// 封装fetch请求（带超时）
 async function request(url, options = {}) {
   const token = localStorage.getItem('token')
+  const timeout = options.timeout || DEFAULT_TIMEOUT
 
   const headers = {
     'Content-Type': 'application/json',
@@ -14,22 +18,34 @@ async function request(url, options = {}) {
     ...options.headers
   }
 
-  const response = await fetch(`${BASE_URL}${url}`, {
-    ...options,
-    headers
-  })
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), timeout)
 
-  const data = await response.json()
+  try {
+    const response = await fetch(`${BASE_URL}${url}`, {
+      ...options,
+      headers,
+      signal: controller.signal
+    })
 
-  if (!response.ok) {
-    if (response.status === 401) {
-      localStorage.removeItem('token')
-      window.location.href = '/quant'
+    const data = await response.json()
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        localStorage.removeItem('token')
+      }
+      throw new Error(data.error || '请求失败')
     }
-    throw new Error(data.error || '请求失败')
-  }
 
-  return data
+    return data
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      throw new Error('请求超时，请稍后重试')
+    }
+    throw err
+  } finally {
+    clearTimeout(timer)
+  }
 }
 
 // ============ 认证 API ============
@@ -137,4 +153,98 @@ export const settingsApi = {
   }),
   testApiConnection: (settingId) => request(`/settings/api/${settingId}/test`, { method: 'POST' }),
   getSystem: () => request('/settings/system')
+}
+
+// ============ AI 诊断 API ============
+export const aiApi = {
+  getDiagnosis: (params = {}) => {
+    const query = new URLSearchParams(params).toString()
+    return request(`/ai/diagnosis${query ? '?' + query : ''}`, { timeout: 15000 })
+  },
+  getMarketData: () => request('/ai/market-data', { timeout: 15000 }),
+  getHistory: (limit = 20) => request(`/ai/history?limit=${limit}`),
+  getSentiment: () => request('/ai/sentiment'),
+  postDiagnosis: (data) => request('/ai/diagnosis', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    timeout: 15000
+  })
+}
+
+// ============ Pipeline 四阶段量化 API ============
+export const pipelineApi = {
+  // 看板
+  getDashboard: () => request('/pipeline/dashboard', { timeout: 15000 }),
+  listPipelines: (limit = 50) => request(`/pipeline?limit=${limit}`),
+  getPipeline: (pipelineId) => request(`/pipeline/${pipelineId}`),
+  createPipeline: (data) => request('/pipeline', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  }),
+
+  // 四阶段
+  stage1Design: (pipelineId, data = {}) => request(`/pipeline/${pipelineId}/stage1`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    timeout: 30000
+  }),
+  stage2Backtest: (pipelineId, data = {}) => request(`/pipeline/${pipelineId}/stage2`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    timeout: 30000
+  }),
+  stage3Paper: (pipelineId, data = {}) => request(`/pipeline/${pipelineId}/stage3`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    timeout: 30000
+  }),
+  stage4Live: (pipelineId, data = {}) => request(`/pipeline/${pipelineId}/stage4`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    timeout: 30000
+  }),
+
+  // AI 模型管理
+  getProviders: () => request('/pipeline/ai/providers'),
+  getAIModels: () => request('/pipeline/ai/models'),
+  createAIModel: (data) => request('/pipeline/ai/models', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  }),
+  updateAIModel: (modelId, data) => request(`/pipeline/ai/models/${modelId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(data)
+  }),
+  deleteAIModel: (modelId) => request(`/pipeline/ai/models/${modelId}`, {
+    method: 'DELETE'
+  }),
+  testAIModel: (modelId) => request(`/pipeline/ai/models/${modelId}/test`, {
+    method: 'POST',
+    timeout: 20000
+  }),
+
+  // AI 分析
+  aiAnalyze: (data) => request('/pipeline/ai/analyze', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    timeout: 30000
+  }),
+
+  // 回测
+  listBacktests: (limit = 20) => request(`/pipeline/backtests?limit=${limit}`),
+  getBacktest: (backtestId) => request(`/pipeline/backtests/${backtestId}`),
+  runBacktest: (data) => request('/pipeline/backtests', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    timeout: 30000
+  }),
+  getStrategyTypes: () => request('/pipeline/strategy-types'),
+
+  // 模拟交易
+  getPaperState: () => request('/pipeline/paper-trading/state'),
+  paperTrade: (data) => request('/pipeline/paper-trading/trade', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  }),
+  stopPaper: () => request('/pipeline/paper-trading/stop', { method: 'POST' })
 }
